@@ -2,10 +2,12 @@ package com.example.practicaretofits
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.practicaretofits.databinding.ActivityMainBinding
+import com.google.android.material.internal.ViewUtils.hideKeyboard
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -51,9 +53,16 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener{
                 }else{
                     showEror()
                 }
+                hideKeyboard()
             }
         }
     }
+
+    private fun hideKeyboard() {
+        val imm : InputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(binding.viewRoot.windowToken, 0)
+    }
+
     private fun showEror(){
         Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
     }
